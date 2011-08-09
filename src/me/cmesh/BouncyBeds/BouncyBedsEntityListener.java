@@ -17,6 +17,11 @@ public class BouncyBedsEntityListener extends EntityListener
 	{
 		if (event.getEntity() instanceof Player)
 		{
+			if(!plugin.fall.containsKey(event.getEntity().getUniqueId()))
+			{
+				return;
+			}
+			
 			if(plugin.fall.get(event.getEntity().getUniqueId()))
 			{
 				event.setCancelled(true);
