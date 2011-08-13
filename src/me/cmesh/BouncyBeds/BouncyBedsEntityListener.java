@@ -1,5 +1,7 @@
 package me.cmesh.BouncyBeds;
 
+import java.util.UUID;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
@@ -17,15 +19,11 @@ public class BouncyBedsEntityListener extends EntityListener
 	{
 		if (event.getEntity() instanceof Player)
 		{
-			if(!plugin.fall.containsKey(event.getEntity().getUniqueId()))
+			UUID key = event.getEntity().getUniqueId();
+			if(plugin.fall.containsKey(key))
 			{
-				return;
+				event.setCancelled(plugin.fall.get(key));
 			}
-			
-			if(plugin.fall.get(event.getEntity().getUniqueId()))
-			{
-				event.setCancelled(true);
-    		}
 		}
 	}
 

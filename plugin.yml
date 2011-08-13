@@ -1,3 +1,9 @@
 name: BouncyBeds
 main: me.cmesh.BouncyBeds.BouncyBeds
-version: 1.0
+version: 1.2
+commands:
+   bounce:
+      description: User will leave the dream they are in
+      usage: |
+          /bounce true
+          /bounce false
