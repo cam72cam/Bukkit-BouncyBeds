@@ -20,6 +20,11 @@ public class BouncyBedsPlayerListener extends PlayerListener
 	public void onPlayerMove(PlayerMoveEvent event)
 	{		
 		Player player  = event.getPlayer();
+
+		if(player.isSleeping())
+		{
+			return;
+		}
 		
 		UUID key = player.getUniqueId();
 		
