@@ -28,6 +28,7 @@ public class BouncyBeds extends JavaPlugin
 	public HashMap<UUID, Double> bounceHight = new HashMap<UUID, Double>();
 	public boolean enabled = true;
 	public double maxBounce = 3.0;
+	public int handItem = 0;
 	
 	public void onEnable() 
 	{
@@ -81,6 +82,7 @@ public class BouncyBeds extends JavaPlugin
 	{
 		getConfiguration().load();
 		maxBounce = getConfiguration().getDouble("bouncybeds.max", maxBounce);
+		handItem = getConfiguration().getInt("bouncybeds.item", 0);
 		getConfiguration().save();
 	}
 }
