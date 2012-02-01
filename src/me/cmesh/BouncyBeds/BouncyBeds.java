@@ -2,50 +2,36 @@ package me.cmesh.BouncyBeds;
 
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
-
 public class BouncyBeds extends JavaPlugin 
-{
-	public static final Logger log = Logger.getLogger("Minecraft");
-	
-	private final BouncyBedsPlayerListener playerListener = new BouncyBedsPlayerListener(this);
-	private final BouncyBedsEntityListener entityListener = new BouncyBedsEntityListener(this);
-
-	public PermissionHandler Permissions = null;
-	
+{	
 	public HashMap<UUID, Boolean> fall = new HashMap<UUID, Boolean>();
 	public HashMap<UUID, Double> bounceHight = new HashMap<UUID, Double>();
+	
 	public boolean enabled = true;
 	public double maxBounce = 3.0;
 	public int handItem = 0;
 	
 	public void onEnable() 
 	{
-		PluginManager pm = getServer().getPluginManager();
-		
-		pm.registerEvent(Event.Type.PLAYER_MOVE, playerListener, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
 
-		Plugin permissions = getServer().getPluginManager().getPlugin("Permissions");
-		if (Permissions == null)
-		{
-			Permissions = (permissions != null) ? ((Permissions)permissions).getHandler() : null;
-		}
+		FileConfiguration config = getConfig();
 		
-		reload();
+		maxBounce = config.getDouble("bouncybeds.max", maxBounce);
+		config.set("bouncybeds.max", maxBounce);
+		handItem = config.getInt("bouncybeds.item", 0);
+		config.set("bouncybeds.item", 0);
 		
-		log.info(getDescription().getName()+" version "+getDescription().getVersion()+" is enabled!");
+		saveConfig();
+		
+		new BouncyBedsPlayerListener(this);
+		new BouncyBedsEntityListener(this);
 	}
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	{
@@ -65,24 +51,10 @@ public class BouncyBeds extends JavaPlugin
 		return false;
 	}
 	
-	public void onDisable() 
-	{
-		log.info(getDescription().getName()+" version "+getDescription().getVersion()+" is disabled!");
-	}
+	public void onDisable() { }
 	
 	private boolean hasPermission(Player player, String permission)
 	{
-		return 
-		player.isOp() 
-		|| player.hasPermission(permission) 
-		|| (Permissions ==null ? false : Permissions.has(player,permission));
-	}
-	
-	private void reload()
-	{
-		getConfiguration().load();
-		maxBounce = getConfiguration().getDouble("bouncybeds.max", maxBounce);
-		handItem = getConfiguration().getInt("bouncybeds.item", 0);
-		getConfiguration().save();
+		return player.isOp() || player.hasPermission(permission);
 	}
 }

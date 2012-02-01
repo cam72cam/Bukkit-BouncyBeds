@@ -4,19 +4,23 @@ import java.util.UUID;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
-public class BouncyBedsPlayerListener extends PlayerListener
+public class BouncyBedsPlayerListener implements Listener
 {
 	private static BouncyBeds plugin;
 	
 	public BouncyBedsPlayerListener(BouncyBeds instance)
 	{
 		plugin = instance;
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
+	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerMove(PlayerMoveEvent event)
 	{		
 		Player player  = event.getPlayer();
