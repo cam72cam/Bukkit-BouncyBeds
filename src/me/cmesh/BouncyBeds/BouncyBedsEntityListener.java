@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 public class BouncyBedsEntityListener implements Listener
 {
@@ -24,7 +25,7 @@ public class BouncyBedsEntityListener implements Listener
 		if (event.getEntity() instanceof Player)
 		{
 			UUID key = event.getEntity().getUniqueId();
-			if(plugin.fall.containsKey(key))
+			if(plugin.fall.containsKey(key) && event.getCause() == DamageCause.FALL)
 			{
 				event.setCancelled(plugin.fall.get(key));
 			}

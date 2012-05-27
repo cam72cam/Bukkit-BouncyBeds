@@ -25,7 +25,7 @@ public class BouncyBedsPlayerListener implements Listener
 	{		
 		Player player  = event.getPlayer();
 
-		if(player.isSleeping() || player.getItemInHand().getTypeId() != plugin.handItem)
+		if(player.isSleeping())
 		{
 			return;
 		}

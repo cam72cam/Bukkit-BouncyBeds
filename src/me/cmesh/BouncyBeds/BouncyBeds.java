@@ -16,17 +16,13 @@ public class BouncyBeds extends JavaPlugin
 	
 	public boolean enabled = true;
 	public double maxBounce = 3.0;
-	public int handItem = 0;
 	
 	public void onEnable() 
 	{
-
 		FileConfiguration config = getConfig();
 		
 		maxBounce = config.getDouble("bouncybeds.max", maxBounce);
 		config.set("bouncybeds.max", maxBounce);
-		handItem = config.getInt("bouncybeds.item", 0);
-		config.set("bouncybeds.item", 0);
 		
 		saveConfig();
 		

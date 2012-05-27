@@ -1,6 +1,6 @@
 name: BouncyBeds
 main: me.cmesh.BouncyBeds.BouncyBeds
-version: 1.5
+version: 1.6
 commands:
    bounce:
       description: set bouce on beds
