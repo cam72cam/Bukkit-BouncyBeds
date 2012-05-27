@@ -1,8 +1,11 @@
 package me.cmesh.BouncyBeds;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -12,7 +15,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class BouncyBeds extends JavaPlugin 
 {	
 	public HashMap<UUID, Boolean> fall = new HashMap<UUID, Boolean>();
-	public HashMap<UUID, Double> bounceHight = new HashMap<UUID, Double>();
+	public HashMap<UUID, Double> bounceVelocity = new HashMap<UUID, Double>();
+	public List<Material> materials = Arrays.asList(Material.BED, Material.BED_BLOCK, Material.HUGE_MUSHROOM_1, Material.HUGE_MUSHROOM_2);
 	
 	public boolean enabled = true;
 	public double maxBounce = 3.0;

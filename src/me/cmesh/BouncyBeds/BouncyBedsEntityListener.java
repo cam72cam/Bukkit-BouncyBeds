@@ -24,12 +24,13 @@ public class BouncyBedsEntityListener implements Listener
 	{
 		if (event.getEntity() instanceof Player)
 		{
+			Player player = (Player) event.getEntity();
 			UUID key = event.getEntity().getUniqueId();
-			if(plugin.fall.containsKey(key) && event.getCause() == DamageCause.FALL)
+			if (plugin.fall.containsKey(key) && event.getCause() == DamageCause.FALL &&
+				(!player.hasPermission("bouncybeds.takedamage") || player.isOp()))
 			{
 				event.setCancelled(plugin.fall.get(key));
 			}
 		}
 	}
-
 }
