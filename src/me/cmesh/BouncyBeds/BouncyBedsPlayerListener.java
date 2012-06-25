@@ -57,14 +57,14 @@ public class BouncyBedsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerMove(PlayerMoveEvent event)
 	{
-		Player player  = event.getPlayer();
+		Player player = event.getPlayer();
 		
 		if(player.isSleeping())
 		{
 			return;
 		}
 		
-		if(!plugin.enabled || !player.hasPermission("bouncybeds.bounce"))
+		if(!plugin.enabled || !hasPermission(player, "bouncybeds.bounce"))
 		{
 			return;
 		}
@@ -111,9 +111,24 @@ public class BouncyBedsPlayerListener implements Listener
 			}
 		}
 	}
+	private Boolean hasPermission(Player player, String permission)
+	{
+		boolean permissions = false;
+		boolean permissionsEx = false;
+		if(plugin.PermissionEnabled())
+		{
+			permissions = plugin.permissionsPlugin.permission(player, permission);
+		}
+		if(plugin.PermissionExEnabled())
+		{
+			permissionsEx = plugin.permissionsExPlugin.has(player, permission);
+		}
+		return player.isOp() || player.hasPermission(permission) || permissions || permissionsEx;
+	}
 	
 	private void exemptPlayer(Player player)
 	{
+		player.sendMessage(plugin.antiCheatEnabled + "");
 		if(plugin.antiCheatEnabled)
 		{
 			UUID key = player.getUniqueId();

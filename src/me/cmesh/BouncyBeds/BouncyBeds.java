@@ -14,6 +14,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import ru.tehkode.permissions.PermissionManager;
+
+import com.nijiko.permissions.PermissionHandler;
+
 public class BouncyBeds extends JavaPlugin 
 {	
 	public HashMap<UUID, Boolean> fall = new HashMap<UUID, Boolean>();
@@ -23,12 +27,15 @@ public class BouncyBeds extends JavaPlugin
 	public boolean enabled = true;
 	public double maxBounce = 3.0;
 	public boolean antiCheatEnabled;
-	
+
+    public PermissionHandler permissionsPlugin = null;
+    public PermissionManager permissionsExPlugin = null;
+    
 	public void onEnable() 
 	{
 		Plugin antiCheat = Bukkit.getServer().getPluginManager().getPlugin("AntiCheat");
 		
-		if(antiCheat != null && antiCheat.isEnabled())
+		if(antiCheat != null)// && antiCheat.isEnabled())
 		{
 			antiCheatEnabled = true;
 		}
@@ -43,6 +50,16 @@ public class BouncyBeds extends JavaPlugin
 		new BouncyBedsPlayerListener(this);
 		new BouncyBedsEntityListener(this);
 	}
+	
+	public boolean PermissionEnabled()
+	{
+		return permissionsPlugin != null;
+	}
+	public boolean PermissionExEnabled()
+	{
+		return permissionsExPlugin != null;
+	}
+	
 	
 	public void onDisable()
 	{
