@@ -1,9 +1,10 @@
 name: BouncyBeds
 main: me.cmesh.BouncyBeds.BouncyBeds
 version: 1.6
+softdepend: [AntiCheat]
 commands:
    bounce:
-      description: set bouce on beds
+      description: set bounce on beds
       usage: |
           /bounce true
           /bounce false

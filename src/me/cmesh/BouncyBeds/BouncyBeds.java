@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BouncyBeds extends JavaPlugin 
@@ -20,9 +22,17 @@ public class BouncyBeds extends JavaPlugin
 	
 	public boolean enabled = true;
 	public double maxBounce = 3.0;
+	public boolean antiCheatEnabled;
 	
 	public void onEnable() 
 	{
+		Plugin antiCheat = Bukkit.getServer().getPluginManager().getPlugin("AntiCheat");
+		
+		if(antiCheat != null && antiCheat.isEnabled())
+		{
+			antiCheatEnabled = true;
+		}
+		
 		FileConfiguration config = getConfig();
 		
 		maxBounce = config.getDouble("bouncybeds.max", maxBounce);
@@ -33,6 +43,12 @@ public class BouncyBeds extends JavaPlugin
 		new BouncyBedsPlayerListener(this);
 		new BouncyBedsEntityListener(this);
 	}
+	
+	public void onDisable()
+	{
+    	getServer().getScheduler().cancelTasks(this);	
+	}
+	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	{
 		if(commandLabel.equalsIgnoreCase("bounce") && sender instanceof Player) 
@@ -51,10 +67,8 @@ public class BouncyBeds extends JavaPlugin
 		return false;
 	}
 	
-	public void onDisable() { }
-	
 	private boolean hasPermission(Player player, String permission)
 	{
-		return player.isOp() || player.hasPermission(permission);
+		return player.isOp() || player.hasPermission(permission) || true;
 	}
 }
