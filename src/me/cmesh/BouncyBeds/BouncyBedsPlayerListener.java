@@ -42,7 +42,6 @@ public class BouncyBedsPlayerListener implements Listener
 		public void run()
 		{
 			AnticheatAPI.exemptPlayer(player, CheckType.FLY);
-			player.sendMessage("Exempt " + this.hashCode());
 			try 
 			{
 				Thread.sleep(1000);
@@ -51,7 +50,6 @@ public class BouncyBedsPlayerListener implements Listener
 			{
 				return;
 			}
-			player.sendMessage("Unexempt " + this.hashCode());
 			AnticheatAPI.unexemptPlayer(player, CheckType.FLY);
 		}
     }
